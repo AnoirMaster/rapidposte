@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n="tarifs_title">Tarifs & Simulateur | La Poste Tunisienne</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="../assets/js/lang.js" defer></script>
+  <script src="../assets/js/script.js" defer></script>
+</head>
+<body>
+
+<header>
+  <div class="logo-box">
+    <img src="../assets/images/partners/La_Poste_tunisienne_2011.svg.png" alt="La Poste Tunisienne" />
+    <div class="brand-name">LA POSTE<br />TUNISIENNE</div>
+  </div>
+
+  <nav>
+    <ul>
+      <li><a href="../index.html"><span data-i18n="nav_home">ACCUEIL</span></a></li>
+      <li><a href="arsil.html" class="nav-new"><span data-i18n="nav_arsil">ARSIL 1-2-3</span> <span class="nav-badge" data-i18n="badge_new">Nouveau</span></a></li>
+      <li><a class="active" href="tarifs.html"><span data-i18n="nav_tarifs">TARIFS</span></a></li>
+      <li><a href="agences.html"><span data-i18n="nav_agences">AGENCES</span></a></li>
+      <li><a href="delais.html"><span data-i18n="nav_delais">DÉLAIS</span></a></li>
+      <li><a href="contact.html"><span data-i18n="nav_contact">CONTACT</span></a></li>
+    </ul>
+  </nav>
+  <div class="lang-switch" aria-label="Langue">
+    <button type="button" class="lang-btn" data-lang="fr">FR</button>
+    <button type="button" class="lang-btn" data-lang="en">EN</button>
+    <button type="button" class="lang-btn" data-lang="ar">AR</button>
+  </div>
+
+</header>
+
+<section class="hero hero-tarifs">
+  <h1 data-i18n="tf_hero_title">Tarifs & Simulation</h1>
+  <p data-i18n="tf_hero_sub">Calculez vos frais d'envois nationaux et internationaux en un clic.</p>
+</section>
+
+<main class="main-container">
+  <div class="card">
+    <h2><i class="fas fa-flag"></i> <span data-i18n="tr_nat">Tarifs Nationaux (Tunisie)</span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th data-i18n="tr_weight">Poids</th>
+          <th data-i18n="tr_delay">Délai</th>
+          <th data-i18n="tr_price">Prix TTC</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-i18n="tr_row1_weight">Jusqu'à 1 Kg</td>
+          <td data-i18n="tr_row_delay_24">24h - 48h</td>
+          <td class="price-tag">7.500 DT</td>
+        </tr>
+        <tr>
+          <td data-i18n="tr_row2_weight">1 Kg à 5 Kg</td>
+          <td data-i18n="tr_row_delay_24">24h - 48h</td>
+          <td class="price-tag">12.000 DT</td>
+        </tr>
+        <tr>
+          <td data-i18n="tr_row3_weight">5 Kg à 10 Kg</td>
+          <td data-i18n="tr_row_delay_24">24h - 48h</td>
+          <td class="price-tag">18.500 DT</td>
+        </tr>
+        <tr>
+          <td data-i18n="tr_row4_weight">Plus de 10 Kg</td>
+          <td data-i18n="tr_row4_delay">Sur devis</td>
+          <td class="price-tag" data-i18n="tr_row4_price">Contactez-nous</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="note" data-i18n="tr_note">Remarque : Ces tarifs sont présentés à titre pédagogique (simulation).</p>
+  </div>
+
+  <div class="card">
+    <h2><i class="fas fa-globe-africa"></i> <span data-i18n="tr_int">Simulateur International</span></h2>
+    <p class="muted" data-i18n="tf_int_sub">Choisissez vos options pour obtenir une estimation.</p>
+
+    <div class="calc-grid">
+      <div class="input-group">
+        <label for="zone" data-i18n="tf_dest_label">Destination</label>
+        <select id="zone">
+          <option value="20" data-i18n="tf_zone1">Zone 1 : Maghreb</option>
+          <option value="45" data-i18n="tf_zone2">Zone 2 : Europe</option>
+          <option value="80" data-i18n="tf_zone3">Zone 3 : USA / Canada / Asie</option>
+          <option value="110" data-i18n="tf_zone4">Zone 4 : Reste du monde</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="poids" data-i18n="tf_weight_label">Poids du colis (Kg)</label>
+        <input type="number" id="poids" value="1" min="1" />
+      </div>
+
+      <div class="input-group">
+        <label for="vitesse" data-i18n="tf_service_label">Type de service</label>
+        <select id="vitesse">
+          <option value="1" data-i18n="tf_service_normal">Normal (Standard)</option>
+          <option value="1.6" data-i18n="tf_service_express">Express (Rapide) +60%</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="packing" data-i18n="tf_pack_label">Packaging protection</label>
+        <select id="packing">
+          <option value="0" data-i18n="tf_pack_standard">Standard (Carton simple)</option>
+          <option value="25" data-i18n="tf_pack_premium">Premium (Ultra-sécurisé) +25 DT</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="result-display" id="result-box">
+      <span class="label" data-i18n="tf_result_label">ESTIMATION DU TOTAL</span>
+      <span class="amount" id="total-price">-- DT</span>
+      <p id="details" class="muted" data-i18n="tf_result_hint">Modifiez les champs pour recalculer.</p>
+      <a href="arsil.html" class="btn-arsil"><span data-i18n="tf_result_btn">Passer à l'envoi</span> <i class="fas fa-paper-plane"></i></a>
+    </div>
+  </div>
+</main>
+
+
+<section class="partners-section" data-i18n-aria="partners_aria">
+  <div class="partners-head">
+    <h2 data-i18n="partners_title">Nos partenaires</h2>
+    <div class="partners-divider" aria-hidden="true"></div>
+  </div>
+  <div class="partners-slider" aria-hidden="true">
+    <div class="partners-track">
+    <div class="partners-group">
+      <div class="partners-item"><img src="../assets/images/partners/La_Poste_tunisienne_2011.svg.png" alt="La Poste Tunisienne" /></div>
+      <div class="partners-item"><img src="../assets/images/partners/LogoSwiftGPI.png" alt="Swift GPI" /></div>
+      <div class="partners-item"><img src="../assets/images/partners/my poste logo.png" alt="My Poste" /></div>
+      <div class="partners-item"><img src="../assets/images/partners/DHL logo.png" alt="DHL" /></div>
+      <div class="partners-item"><img src="../assets/images/partners/D17 logo.png" alt="D17" /></div>
+      <div class="partners-item"><img src="../assets/images/partners/iset.png" alt="ISET Sidi Bouzid" /></div>
+    </div>
+    <div class="partners-group" aria-hidden="true">
+      <div class="partners-item"><img src="../assets/images/partners/La_Poste_tunisienne_2011.svg.png" alt="La Poste Tunisienne" /></div>
+      <div class="partners-item"><img src="../assets/images/partners/LogoSwiftGPI.png" alt="Swift GPI" /></div>
+      <div class="partners-item"><img src="../assets/images/partners/my poste logo.png" alt="My Poste" /></div>
+      <div class="partners-item"><img src="../assets/images/partners/DHL logo.png" alt="DHL" /></div>
+      <div class="partners-item"><img src="../assets/images/partners/D17 logo.png" alt="D17" /></div>
+      <div class="partners-item"><img src="../assets/images/partners/iset.png" alt="ISET Sidi Bouzid" /></div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4><i class="fas fa-circle-info"></i> <span data-i18n="footer_about">A PROPOS</span></h4>
+      <ul>
+        <li><a href="apropos.html" data-i18n="footer_about_link">A propos du service</a></li>
+        <li><a href="arsil.html" data-i18n="footer_arsil_link">Envoyer avec ARSIL</a></li>
+        <li><a href="tarifs.html" data-i18n="footer_tarifs_link">Tarifs</a></li>
+        <li><a href="agences.html" data-i18n="footer_agences_link">Trouver une agence</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4><i class="fas fa-headset"></i> <span data-i18n="footer_support">SUPPORT</span></h4>
+      <ul>
+        <li><a href="tel:+21680100000">+216 80 100 000</a></li>
+        <li><a href="mailto:contact@rapidposte.tn">contact@rapidposte.tn</a></li>
+        <li><a href="contact.html" data-i18n="footer_help_link">Centre d'aide</a></li>
+        <li><a href="contact.html" data-i18n="footer_faq_link">Questions fréquentes</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4><i class="fas fa-share-nodes"></i> <span data-i18n="footer_follow">SUIVEZ-NOUS</span></h4>
+      <ul>
+        <li><a href="#" rel="noopener">Facebook</a></li>
+        <li><a href="#" rel="noopener">Twitter</a></li>
+        <li><a href="#" rel="noopener">Instagram</a></li>
+        <li><a href="#" rel="noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-bottom">    <div class="footer-copy" data-i18n="footer_copy">© 2026 LA POSTE TUNISIENNE. Tous droits réservés.</div>
+    <div class="footer-links">
+      <a href="#" data-i18n="footer_confidential">Confidentialité</a>
+      <span class="sep">|</span>
+      <a href="#" data-i18n="footer_conditions">Conditions</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
