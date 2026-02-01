@@ -1,0 +1,23 @@
+﻿{
+  "success": true,
+  "data": [
+    {
+      "category": "INFO",
+      "title": "Ouverture de nouveaux points relais",
+      "body": "De nouveaux points relais Rapid Poste sont disponibles dans plusieurs gouvernorats.",
+      "published_at": "2026-01-20"
+    },
+    {
+      "category": "SERVICE",
+      "title": "ARSIL 1-2-3 : parcours simplifie",
+      "body": "Une interface plus rapide pour creer et payer vos envois en ligne.",
+      "published_at": "2026-01-10"
+    },
+    {
+      "category": "INFO",
+      "title": "Mise a jour des delais express",
+      "body": "Les delais express ont ete optimises pour plusieurs destinations.",
+      "published_at": "2026-01-05"
+    }
+  ]
+}

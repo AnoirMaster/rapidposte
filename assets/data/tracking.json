@@ -1,0 +1,30 @@
+﻿{
+  "success": true,
+  "data": [
+    {
+      "tracking_number": "EE995454657TN",
+      "status": "En transit",
+      "client": "Sami Ben Ali",
+      "location": "Tunis Centre",
+      "final_note": "En attente",
+      "update": "2026-02-01 10:35",
+      "history": [
+        { "status": "Expedition", "office": "Bureau Rapid Poste - Sousse", "event_time": "2026-01-30 09:10" },
+        { "status": "En transit", "office": "Centre de tri - Tunis", "event_time": "2026-01-31 18:45" }
+      ]
+    },
+    {
+      "tracking_number": "EE123456789TN",
+      "status": "Livre",
+      "client": "Leila Saidi",
+      "location": "Sfax Sud",
+      "final_note": "Livre",
+      "update": "2026-01-29 15:20",
+      "history": [
+        { "status": "Expedition", "office": "Bureau Rapid Poste - Tunis", "event_time": "2026-01-27 08:50" },
+        { "status": "En transit", "office": "Centre de tri - Sfax", "event_time": "2026-01-28 12:30" },
+        { "status": "Livre", "office": "Bureau de distribution - Sfax", "event_time": "2026-01-29 15:20" }
+      ]
+    }
+  ]
+}

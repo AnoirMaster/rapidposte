@@ -47,7 +47,7 @@ const RP_TRANSLATIONS = {
     tl_delivery: 'Livraison',
     tl_pending: 'En attente',
     history_title: 'Historique',
-    demo_note: '* Projet pédagogique (données simulées) – Stage ISET.',
+    demo_note: '* Projet pédagogique (données simulées JSON) – Stage ISET.',
 
     useful_links_title: 'Liens utiles',
     useful_links_sub: 'Accédez rapidement aux services les plus demandés.',
@@ -133,7 +133,7 @@ const RP_TRANSLATIONS = {
 
     // AGENCES
     ag_hero_title: 'Trouvez une agence.',
-    ag_hero_sub: 'Recherche par ville, gouvernorat ou type. (Données simulées en base)',
+    ag_hero_sub: 'Recherche par ville, gouvernorat ou type. (Données simulées en fichier JSON)',
     ag_label_search: 'Rechercher',
     ag_search_ph: 'Ex: Manouba, Tunis, Ariana...',
     ag_label_type: 'Type',
@@ -150,7 +150,7 @@ const RP_TRANSLATIONS = {
 
     // DÉLAIS
     dl_hero_title: 'Estimez les délais.',
-    dl_hero_sub: 'Formulaire simple (simulation) basé sur des règles stockées en base.',
+    dl_hero_sub: 'Formulaire simple (simulation) basé sur des règles dans un fichier JSON.',
     dl_section_aria: 'Estimateur délais',
     dl_title: 'Estimateur',
     dl_sub: 'Choisissez origine, destination et service.',
@@ -173,7 +173,7 @@ const RP_TRANSLATIONS = {
 
     // CONTACT
     ct_hero_title: 'Contact & assistance.',
-    ct_hero_sub: 'Envoyez-nous un message. (Enregistré en base – projet pédagogique)',
+    ct_hero_sub: 'Envoyez-nous un message. (Simulation locale – données non envoyées)',
     ct_label_name: 'Nom',
     ct_label_email: 'Email',
     ct_label_message: 'Message',
@@ -196,10 +196,10 @@ const RP_TRANSLATIONS = {
     ab_feat1: 'Suivi colis avec timeline + historique',
     ab_feat2: 'ARSIL 1-2-3 (adresser, décrire, valider)',
     ab_feat3: 'Tarifs nationaux + simulateur international',
-    ab_feat4: 'Agences (recherche depuis la base)',
-    ab_feat5: 'Estimation des délais (simulation depuis la base)',
+    ab_feat4: 'Agences (recherche depuis JSON)',
+    ab_feat5: 'Estimation des délais (simulation JSON)',
     ab_note_title: 'Remarque',
-    ab_note_body: 'Les données affichées (colis, agences, actualités, délais) sont <strong>simulées</strong> et stockées en base MySQL pour démonstration.',
+    ab_note_body: 'Les données affichées (colis, agences, actualités, délais) sont <strong>simulées</strong> et chargées depuis des fichiers JSON pour démonstration.',
 
     // FOOTER
     footer_about: 'A PROPOS',
@@ -228,9 +228,9 @@ const RP_TRANSLATIONS = {
     status_delivered: 'Livré',
     status_pending: 'En attente',
     news_empty_title: 'Aucune actualité',
-    news_empty_body: 'Ajoutez des lignes dans la table news (SQL) pour afficher des annonces.',
+    news_empty_body: 'Ajoutez des éléments dans assets/data/news.json pour afficher des annonces.',
     news_error_title: 'Impossible de charger les actualités',
-    news_error_body: 'Vérifiez que MySQL tourne et que la base est importée.',
+    news_error_body: 'Impossible de charger le fichier JSON des actualités.',
     news_tag_info: 'INFO',
     news_tag_error: 'ERREUR',
     agencies_none: 'Aucune agence trouvée.',
@@ -280,7 +280,7 @@ const RP_TRANSLATIONS = {
     tl_delivery: 'Delivery',
     tl_pending: 'Pending',
     history_title: 'History',
-    demo_note: '* Educational project (simulated data) – ISET internship.',
+    demo_note: '* Educational project (simulated JSON data) – ISET internship.',
 
     useful_links_title: 'Useful links',
     useful_links_sub: 'Quick access to the most requested services.',
@@ -363,7 +363,7 @@ const RP_TRANSLATIONS = {
     tf_calc_details: 'Calculation for {{weight}} kg to the selected zone ({{speed}}).',
 
     ag_hero_title: 'Find an agency.',
-    ag_hero_sub: 'Search by city, governorate or type. (Simulated database)',
+    ag_hero_sub: 'Search by city, governorate or type. (Simulated JSON data)',
     ag_label_search: 'Search',
     ag_search_ph: 'e.g. Manouba, Tunis, Ariana...',
     ag_label_type: 'Type',
@@ -379,7 +379,7 @@ const RP_TRANSLATIONS = {
     ag_label_hours: 'Hours',
 
     dl_hero_title: 'Estimate delays.',
-    dl_hero_sub: 'Simple form (simulation) based on rules stored in the database.',
+    dl_hero_sub: 'Simple form (simulation) based on rules in a JSON file.',
     dl_section_aria: 'Delay estimator',
     dl_title: 'Estimator',
     dl_sub: 'Choose origin, destination and service.',
@@ -401,7 +401,7 @@ const RP_TRANSLATIONS = {
     dl_msg_comm_error: 'Communication error.',
 
     ct_hero_title: 'Contact & support.',
-    ct_hero_sub: 'Send us a message. (Stored in DB – educational project)',
+    ct_hero_sub: 'Send us a message. (Local simulation – not sent)',
     ct_label_name: 'Name',
     ct_label_email: 'Email',
     ct_label_message: 'Message',
@@ -423,10 +423,10 @@ const RP_TRANSLATIONS = {
     ab_feat1: 'Parcel tracking with timeline + history',
     ab_feat2: 'ARSIL 1-2-3 (address, describe, validate)',
     ab_feat3: 'Domestic pricing + international simulator',
-    ab_feat4: 'Agencies (search from database)',
-    ab_feat5: 'Delay estimation (simulation from database)',
+    ab_feat4: 'Agencies (search from JSON)',
+    ab_feat5: 'Delay estimation (JSON simulation)',
     ab_note_title: 'Note',
-    ab_note_body: 'Displayed data (parcels, agencies, news, delays) are <strong>simulated</strong> and stored in a MySQL database for demonstration.',
+    ab_note_body: 'Displayed data (parcels, agencies, news, delays) are <strong>simulated</strong> and loaded from JSON files for demonstration.',
 
     footer_about: 'ABOUT',
     footer_support: 'SUPPORT',
@@ -453,9 +453,9 @@ const RP_TRANSLATIONS = {
     status_delivered: 'Delivered',
     status_pending: 'Pending',
     news_empty_title: 'No news',
-    news_empty_body: 'Add rows in the news table (SQL) to display announcements.',
+    news_empty_body: 'Add items in assets/data/news.json to display announcements.',
     news_error_title: 'Unable to load news',
-    news_error_body: 'Check that MySQL is running and the database is imported.',
+    news_error_body: 'Unable to load the news JSON file.',
     news_tag_info: 'INFO',
     news_tag_error: 'ERROR',
     agencies_none: 'No agency found.',
@@ -505,7 +505,7 @@ const RP_TRANSLATIONS = {
     tl_delivery: 'التسليم',
     tl_pending: 'في الانتظار',
     history_title: 'السجل',
-    demo_note: '* مشروع تربوي (بيانات محاكاة) – تربص ISET.',
+    demo_note: '* مشروع تربوي (بيانات محاكاة JSON) – تربص ISET.',
 
     useful_links_title: 'روابط مفيدة',
     useful_links_sub: 'وصول سريع إلى أكثر الخدمات طلباً.',
@@ -588,7 +588,7 @@ const RP_TRANSLATIONS = {
     tf_calc_details: 'حساب لـ {{weight}} كغ نحو المنطقة المختارة ({{speed}}).',
 
     ag_hero_title: 'ابحث عن وكالة.',
-    ag_hero_sub: 'بحث حسب المدينة أو الولاية أو النوع. (بيانات محاكاة في القاعدة)',
+    ag_hero_sub: 'بحث حسب المدينة أو الولاية أو النوع. (بيانات محاكاة JSON)',
     ag_label_search: 'بحث',
     ag_search_ph: 'مثال: منوبة، تونس، أريانة...',
     ag_label_type: 'النوع',
@@ -604,7 +604,7 @@ const RP_TRANSLATIONS = {
     ag_label_hours: 'الساعات',
 
     dl_hero_title: 'قدّر الآجال.',
-    dl_hero_sub: 'نموذج بسيط (محاكاة) مبني على قواعد مخزّنة في القاعدة.',
+    dl_hero_sub: 'نموذج بسيط (محاكاة) مبني على قواعد في ملف JSON.',
     dl_section_aria: 'مُقدّر الآجال',
     dl_title: 'المُقدّر',
     dl_sub: 'اختر المنشأ والوجهة والخدمة.',
@@ -626,7 +626,7 @@ const RP_TRANSLATIONS = {
     dl_msg_comm_error: 'خطأ في الاتصال.',
 
     ct_hero_title: 'الاتصال والمساعدة.',
-    ct_hero_sub: 'أرسل لنا رسالة. (مسجّل في القاعدة – مشروع تربوي)',
+    ct_hero_sub: 'أرسل لنا رسالة. (محاكاة محلية – غير مُرسلة)',
     ct_label_name: 'الاسم',
     ct_label_email: 'البريد الإلكتروني',
     ct_label_message: 'الرسالة',
@@ -648,10 +648,10 @@ const RP_TRANSLATIONS = {
     ab_feat1: 'تتبع الطرود مع خط زمني + سجل',
     ab_feat2: 'ARSIL 1-2-3 (العنوان، الوصف، التأكيد)',
     ab_feat3: 'الأسعار الوطنية + محاكي دولي',
-    ab_feat4: 'الوكالات (بحث من القاعدة)',
-    ab_feat5: 'تقدير الآجال (محاكاة من القاعدة)',
+    ab_feat4: 'الوكالات (بحث من JSON)',
+    ab_feat5: 'تقدير الآجال (محاكاة JSON)',
     ab_note_title: 'ملاحظة',
-    ab_note_body: 'البيانات المعروضة (الطرود، الوكالات، الأخبار، الآجال) <strong>محاكاة</strong> ومخزّنة في قاعدة MySQL للعرض.',
+    ab_note_body: 'البيانات المعروضة (الطرود، الوكالات، الأخبار، الآجال) <strong>محاكاة</strong> ومحفوظة في ملفات JSON للعرض.',
 
     footer_about: 'حول',
     footer_support: 'الدعم',
@@ -678,9 +678,9 @@ const RP_TRANSLATIONS = {
     status_delivered: 'تم التسليم',
     status_pending: 'في الانتظار',
     news_empty_title: 'لا توجد أخبار',
-    news_empty_body: 'أضف أسطر في جدول news (SQL) لعرض الإعلانات.',
+    news_empty_body: 'أضف عناصر في assets/data/news.json لعرض الإعلانات.',
     news_error_title: 'تعذر تحميل الأخبار',
-    news_error_body: 'تأكد من أن MySQL يعمل وأن القاعدة مستوردة.',
+    news_error_body: 'تعذّر تحميل ملف أخبار JSON.',
     news_tag_info: 'معلومات',
     news_tag_error: 'خطأ',
     agencies_none: 'لا توجد وكالات مطابقة.',

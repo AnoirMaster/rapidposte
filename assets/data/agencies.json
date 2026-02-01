@@ -1,0 +1,59 @@
+﻿{
+  "success": true,
+  "data": [
+    {
+      "name": "Bureau de poste Tunis Centre",
+      "address": "Avenue Habib Bourguiba",
+      "city": "Tunis",
+      "governorate": "Tunis",
+      "phone": "+216 71 000 111",
+      "hours": "08:00 - 17:00",
+      "type": "Bureau"
+    },
+    {
+      "name": "Bureau de poste Sousse Ville",
+      "address": "Rue de France",
+      "city": "Sousse",
+      "governorate": "Sousse",
+      "phone": "+216 73 000 222",
+      "hours": "08:00 - 16:30",
+      "type": "Bureau"
+    },
+    {
+      "name": "Centre de tri Ariana",
+      "address": "Zone Industrielle Ariana",
+      "city": "Ariana",
+      "governorate": "Ariana",
+      "phone": "+216 71 000 333",
+      "hours": "07:30 - 18:00",
+      "type": "Centre"
+    },
+    {
+      "name": "Bureau de distribution Sfax Sud",
+      "address": "Route de Gabes",
+      "city": "Sfax",
+      "governorate": "Sfax",
+      "phone": "+216 74 000 444",
+      "hours": "08:00 - 15:30",
+      "type": "Distribution"
+    },
+    {
+      "name": "Bureau de poste Monastir",
+      "address": "Avenue Bourguiba",
+      "city": "Monastir",
+      "governorate": "Monastir",
+      "phone": "+216 73 000 555",
+      "hours": "08:00 - 16:00",
+      "type": "Bureau"
+    },
+    {
+      "name": "Centre de tri Ben Arous",
+      "address": "Zone Industrielle Ben Arous",
+      "city": "Ben Arous",
+      "governorate": "Ben Arous",
+      "phone": "+216 71 000 666",
+      "hours": "07:30 - 18:30",
+      "type": "Centre"
+    }
+  ]
+}

@@ -5,6 +5,79 @@
 function $(id){ return document.getElementById(id); }
 const RP_BASE = window.location.pathname.replace(/\\/g, '/').includes('/pages/') ? '..' : '.';
 const apiUrl = (path) => `${RP_BASE}/api/${path}`;
+const USE_STATIC_DATA = true;
+const dataUrl = (file) => `${RP_BASE}/assets/data/${file}`;
+const staticCache = {};
+const IS_FILE_PROTOCOL = window.location.protocol === 'file:';
+
+// Inline fallback data for file:// usage (no fetch allowed)
+const INLINE_DATA = {
+  news: {
+    success: true,
+    data: [
+      { category: 'INFO', title: 'Ouverture de nouveaux points relais', body: 'De nouveaux points relais Rapid Poste sont disponibles dans plusieurs gouvernorats.', published_at: '2026-01-20' },
+      { category: 'SERVICE', title: 'ARSIL 1-2-3 : parcours simplifie', body: 'Une interface plus rapide pour creer et payer vos envois en ligne.', published_at: '2026-01-10' },
+      { category: 'INFO', title: 'Mise a jour des delais express', body: 'Les delais express ont ete optimises pour plusieurs destinations.', published_at: '2026-01-05' }
+    ]
+  },
+  agencies: {
+    success: true,
+    data: [
+      { name: 'Bureau de poste Tunis Centre', address: 'Avenue Habib Bourguiba', city: 'Tunis', governorate: 'Tunis', phone: '+216 71 000 111', hours: '08:00 - 17:00', type: 'Bureau' },
+      { name: 'Bureau de poste Sousse Ville', address: 'Rue de France', city: 'Sousse', governorate: 'Sousse', phone: '+216 73 000 222', hours: '08:00 - 16:30', type: 'Bureau' },
+      { name: 'Centre de tri Ariana', address: 'Zone Industrielle Ariana', city: 'Ariana', governorate: 'Ariana', phone: '+216 71 000 333', hours: '07:30 - 18:00', type: 'Centre' },
+      { name: 'Bureau de distribution Sfax Sud', address: 'Route de Gabes', city: 'Sfax', governorate: 'Sfax', phone: '+216 74 000 444', hours: '08:00 - 15:30', type: 'Distribution' },
+      { name: 'Bureau de poste Monastir', address: 'Avenue Bourguiba', city: 'Monastir', governorate: 'Monastir', phone: '+216 73 000 555', hours: '08:00 - 16:00', type: 'Bureau' },
+      { name: 'Centre de tri Ben Arous', address: 'Zone Industrielle Ben Arous', city: 'Ben Arous', governorate: 'Ben Arous', phone: '+216 71 000 666', hours: '07:30 - 18:30', type: 'Centre' }
+    ]
+  },
+  delais: {
+    success: true,
+    rules: [
+      { origin: 'Tunisie', destination: 'Tunisie', service: 'Standard', min_days: 2, max_days: 4, note: 'Service national standard.' },
+      { origin: 'Tunisie', destination: 'Tunisie', service: 'Express', min_days: 1, max_days: 2, note: 'Service express national.' },
+      { origin: 'Tunisie', destination: 'Maghreb', service: 'Standard', min_days: 4, max_days: 7, note: 'Maghreb - standard.' },
+      { origin: 'Tunisie', destination: 'Maghreb', service: 'Express', min_days: 2, max_days: 4, note: 'Maghreb - express.' },
+      { origin: 'Tunisie', destination: 'Europe', service: 'Standard', min_days: 6, max_days: 10, note: 'Europe - standard.' },
+      { origin: 'Tunisie', destination: 'Europe', service: 'Express', min_days: 3, max_days: 5, note: 'Europe - express.' },
+      { origin: 'Tunisie', destination: 'USA/Canada/Asie', service: 'Standard', min_days: 8, max_days: 14, note: 'International long courrier - standard.' },
+      { origin: 'Tunisie', destination: 'USA/Canada/Asie', service: 'Express', min_days: 4, max_days: 7, note: 'International long courrier - express.' },
+      { origin: 'Tunisie', destination: 'Reste du monde', service: 'Standard', min_days: 9, max_days: 16, note: 'Reste du monde - standard.' },
+      { origin: 'Tunisie', destination: 'Reste du monde', service: 'Express', min_days: 5, max_days: 9, note: 'Reste du monde - express.' }
+    ],
+    default: { min_days: 6, max_days: 12, note: 'Estimation moyenne.' }
+  },
+  tracking: {
+    success: true,
+    data: [
+      {
+        tracking_number: 'EE995454657TN',
+        status: 'En transit',
+        client: 'Sami Ben Ali',
+        location: 'Tunis Centre',
+        final_note: 'En attente',
+        update: '2026-02-01 10:35',
+        history: [
+          { status: 'Expedition', office: 'Bureau Rapid Poste - Sousse', event_time: '2026-01-30 09:10' },
+          { status: 'En transit', office: 'Centre de tri - Tunis', event_time: '2026-01-31 18:45' }
+        ]
+      },
+      {
+        tracking_number: 'EE123456789TN',
+        status: 'Livre',
+        client: 'Leila Saidi',
+        location: 'Sfax Sud',
+        final_note: 'Livre',
+        update: '2026-01-29 15:20',
+        history: [
+          { status: 'Expedition', office: 'Bureau Rapid Poste - Tunis', event_time: '2026-01-27 08:50' },
+          { status: 'En transit', office: 'Centre de tri - Sfax', event_time: '2026-01-28 12:30' },
+          { status: 'Livre', office: 'Bureau de distribution - Sfax', event_time: '2026-01-29 15:20' }
+        ]
+      }
+    ]
+  }
+};
 function hideMsg(el){ if(el){ el.style.display = 'none'; el.textContent = ''; } }
 function showMsg(el, text, color){
   if(!el) return;
@@ -100,24 +173,38 @@ async function trackColis(){
   if(resultDiv){ resultDiv.style.display = 'none'; }
 
   try{
-    const res = await fetch(apiUrl('track_process.php'), {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: 'tracking_number=' + encodeURIComponent(num)
-    });
+    let data = null;
+    if(USE_STATIC_DATA){
+      const payload = await getStaticJson('tracking.json');
+      const items = Array.isArray(payload?.data) ? payload.data
+        : Array.isArray(payload?.items) ? payload.items
+        : Array.isArray(payload) ? payload
+        : [];
+      const match = items.find(it => (it.tracking_number || '').toUpperCase() === num.toUpperCase());
+      if(!match){
+        showError(t('err_not_found'));
+        return;
+      }
+      data = match;
+    }else{
+      const res = await fetch(apiUrl('track_process.php'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'tracking_number=' + encodeURIComponent(num)
+      });
 
-    const rawText = await res.text();
-    let data;
-    try{
-      data = JSON.parse(rawText);
-    }catch(e){
-      console.error('Non-JSON response:', rawText);
-      throw new Error('JSON_PARSE');
-    }
+      const rawText = await res.text();
+      try{
+        data = JSON.parse(rawText);
+      }catch(e){
+        console.error('Non-JSON response:', rawText);
+        throw new Error('JSON_PARSE');
+      }
 
-    if(!data.success){
-      showError(data.message || t('err_not_found'));
-      return;
+      if(!data.success){
+        showError(data.message || t('err_not_found'));
+        return;
+      }
     }
 
     lastTrackingData = data;
@@ -207,6 +294,23 @@ function escapeHtml(str){
     .replaceAll('>','&gt;')
     .replaceAll('"','&quot;')
     .replaceAll("'",'&#039;');
+}
+
+async function getStaticJson(file){
+  if(staticCache[file]) return staticCache[file];
+  if(IS_FILE_PROTOCOL){
+    const inline = file === 'news.json' ? INLINE_DATA.news
+      : file === 'agencies.json' ? INLINE_DATA.agencies
+      : file === 'delais.json' ? INLINE_DATA.delais
+      : file === 'tracking.json' ? INLINE_DATA.tracking
+      : null;
+    staticCache[file] = inline;
+    return inline;
+  }
+  const res = await fetch(dataUrl(file));
+  const data = await res.json();
+  staticCache[file] = data;
+  return data;
 }
 
 function initHeroSlider(){
@@ -375,11 +479,19 @@ async function loadNews(){
   if(!grid) return;
 
   try{
-    const res = await fetch(apiUrl('news_api.php'));
-    const data = await res.json();
-    if(!data.success){ throw new Error('NEWS_FAIL'); }
+    let payload;
+    if(USE_STATIC_DATA){
+      payload = await getStaticJson('news.json');
+    }else{
+      const res = await fetch(apiUrl('news_api.php'));
+      payload = await res.json();
+    }
+    if(payload && payload.success === false){ throw new Error('NEWS_FAIL'); }
 
-    const items = Array.isArray(data.data) ? data.data : [];
+    const items = Array.isArray(payload?.data) ? payload.data
+      : Array.isArray(payload?.items) ? payload.items
+      : Array.isArray(payload) ? payload
+      : [];
     grid.innerHTML = '';
     if(items.length === 0){
       grid.innerHTML = `<div class="news-card">
@@ -428,12 +540,28 @@ async function loadAgencies(){
   hideMsg(msg);
 
   try{
-    const url = `${apiUrl('agencies_api.php')}?q=${encodeURIComponent(q)}&type=${encodeURIComponent(type)}`;
-    const res = await fetch(url);
-    const data = await res.json();
-    if(!data.success) throw new Error('AG_FAIL');
+    let payload;
+    if(USE_STATIC_DATA){
+      payload = await getStaticJson('agencies.json');
+    }else{
+      const url = `${apiUrl('agencies_api.php')}?q=${encodeURIComponent(q)}&type=${encodeURIComponent(type)}`;
+      const res = await fetch(url);
+      payload = await res.json();
+    }
+    if(payload && payload.success === false) throw new Error('AG_FAIL');
 
-    const items = Array.isArray(data.data) ? data.data : [];
+    const rawItems = Array.isArray(payload?.data) ? payload.data
+      : Array.isArray(payload?.items) ? payload.items
+      : Array.isArray(payload) ? payload
+      : [];
+
+    const qn = normalizeText(q);
+    const items = rawItems.filter(a => {
+      if(type && normalizeText(a.type || '') !== normalizeText(type)) return false;
+      if(!qn) return true;
+      const hay = normalizeText(`${a.name || ''} ${a.address || ''} ${a.city || ''} ${a.governorate || ''}`);
+      return hay.includes(qn);
+    });
     if(items.length === 0){
       if(msg){ msg.textContent = t('agencies_none'); msg.style.display='block'; }
       return;
@@ -483,26 +611,44 @@ async function estimateDelais(){
   if(box){ box.style.display='none'; }
 
   try{
-    const res = await fetch(apiUrl('delais_process.php'), {
-      method: 'POST',
-      headers: { 'Content-Type':'application/x-www-form-urlencoded' },
-      body: `origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}&service=${encodeURIComponent(service)}`
-    });
-    const data = await res.json();
-    if(!data.success){
-      if(msg){ msg.textContent = data.message || t('dl_msg_error'); msg.style.display='block'; }
+    let payload;
+    if(USE_STATIC_DATA){
+      payload = await getStaticJson('delais.json');
+    }else{
+      const res = await fetch(apiUrl('delais_process.php'), {
+        method: 'POST',
+        headers: { 'Content-Type':'application/x-www-form-urlencoded' },
+        body: `origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}&service=${encodeURIComponent(service)}`
+      });
+      payload = await res.json();
+    }
+
+    if(payload && payload.success === false){
+      if(msg){ msg.textContent = payload.message || t('dl_msg_error'); msg.style.display='block'; }
       return;
     }
 
-    const min = data.min_days;
-    const max = data.max_days;
+    let rule = null;
+    if(USE_STATIC_DATA){
+      const rules = Array.isArray(payload?.rules) ? payload.rules : [];
+      rule = rules.find(r =>
+        normalizeText(r.origin || '') === normalizeText(origin)
+        && normalizeText(r.destination || '') === normalizeText(destination)
+        && normalizeText(r.service || '') === normalizeText(service)
+      ) || payload?.default || null;
+    }else{
+      rule = payload;
+    }
+
+    const min = rule?.min_days;
+    const max = rule?.max_days;
     const unit = t('dl_days_unit');
     if(value) value.textContent = `${min} - ${max} ${unit}`;
     if(details) details.textContent = tf('dl_details_template', {
       service: serviceLabel,
       origin: originLabel,
       destination: destLabel,
-      note: data.note || ''
+      note: rule?.note || ''
     }).trim();
     if(box) box.style.display='block';
 
@@ -533,6 +679,15 @@ async function sendContact(){
   }
 
   try{
+    if(USE_STATIC_DATA){
+      const existing = JSON.parse(localStorage.getItem('rp_contacts') || '[]');
+      existing.push({ name, email, message, sent_at: new Date().toISOString() });
+      localStorage.setItem('rp_contacts', JSON.stringify(existing));
+      if(out){ out.textContent = t('ct_msg_success'); out.style.display='block'; out.style.color='#27ae60'; }
+      if($('c_msg')) $('c_msg').value='';
+      return;
+    }
+
     const res = await fetch(apiUrl('contact_process.php'), {
       method: 'POST',
       headers: { 'Content-Type':'application/x-www-form-urlencoded' },
