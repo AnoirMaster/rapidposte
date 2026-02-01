@@ -385,6 +385,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const header = document.querySelector('header');
   if(header){
+    const navToggle = header.querySelector('.nav-toggle');
+    const nav = header.querySelector('nav');
+    let navLockUntil = 0;
+    const closeNav = () => {
+      if(document.body.classList.contains('nav-open')){
+        document.body.classList.remove('nav-open');
+        navToggle?.setAttribute('aria-expanded', 'false');
+      }
+    };
+    const openNav = () => {
+      header.classList.remove('header-hidden');
+      document.body.classList.add('nav-open');
+      navToggle?.setAttribute('aria-expanded', 'true');
+    };
+    if(navToggle){
+      navToggle.addEventListener('click', () => {
+        navLockUntil = Date.now() + 600;
+        if(document.body.classList.contains('nav-open')){
+          closeNav();
+        }else{
+          openNav();
+        }
+      });
+    }
+    if(nav){
+      nav.addEventListener('click', (e) => {
+        const target = e.target;
+        if(target && target.tagName === 'A') closeNav();
+      });
+    }
+    window.addEventListener('resize', () => {
+      if(window.innerWidth > 768 && document.body.classList.contains('nav-open')){
+        closeNav();
+      }
+    });
+    document.addEventListener('click', (e) => {
+      if(!document.body.classList.contains('nav-open')) return;
+      const target = e.target;
+      if(header.contains(target)) return;
+      closeNav();
+    });
+
     let lastY = window.scrollY;
     let acc = 0;
     let ticking = false;
@@ -396,13 +438,22 @@ document.addEventListener('DOMContentLoaded', () => {
       const diff = currentY - lastY;
       acc += diff;
 
+      if(Date.now() < navLockUntil){
+        header.classList.remove('header-hidden');
+        lastY = currentY;
+        acc = 0;
+        ticking = false;
+        return;
+      }
+
       if(currentY <= minY){
         header.classList.remove('header-hidden');
         acc = 0;
-      }else if(acc > delta){
+      }else if(diff > 0){
+        closeNav();
         header.classList.add('header-hidden');
         acc = 0;
-      }else if(acc < -delta){
+      }else if(diff < 0){
         header.classList.remove('header-hidden');
         acc = 0;
       }
